@@ -2,8 +2,8 @@ package com.example.myapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.navOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -11,33 +11,40 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        loadFragment(HomeFragment())
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val bottomNavMenu = findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-
-        bottomNav.setOnItemReselectedListener {
-            print(it.itemId.toString())
+        bottomNavMenu.setOnItemReselectedListener {
             when(it.itemId){
-                R.id.nav_home ->  {
-                    loadFragment(HomeFragment())
-                }
-                R.id.nav_favourites -> {
-                    loadFragment(FavouritesFragment())
-
-                }
-                R.id.nav_profile ->  {
-                    loadFragment(ProfileFragment())
-                }
+                R.id.nav_home ->  navController.navigate(R.id.homeFragment,
+                    null,
+                    navOptions { // Use the Kotlin DSL for building NavOptions
+                        anim {
+                            enter = android.R.animator.fade_in
+                            exit = android.R.animator.fade_out
+                        }
+                    })
+                R.id.nav_favourites ->  navController.navigate(R.id.favouritesFragment,
+                    null,
+                    navOptions { // Use the Kotlin DSL for building NavOptions
+                        anim {
+                            enter = android.R.animator.fade_in
+                            exit = android.R.animator.fade_out
+                        }
+                    })
+                R.id.nav_profile ->   navController.navigate((R.id.profileFragment),
+                    null,
+                    navOptions { // Use the Kotlin DSL for building NavOptions
+                        anim {
+                            enter = android.R.animator.fade_in
+                            exit = android.R.animator.fade_out
+                        }
+                    })
             }
         }
-    }
-
-    private  fun loadFragment(fragment: Fragment){
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.frame_layout,fragment)
-        fragmentTransaction.commit()
     }
 
 

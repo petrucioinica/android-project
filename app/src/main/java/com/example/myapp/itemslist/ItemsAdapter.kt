@@ -32,13 +32,17 @@ class ItemsAdapter (
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-      return ItemViewHolder(
-          LayoutInflater.from(parent.context).inflate(
-              R.layout.item_card,
-              parent,
-              false
-          )
-      )
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.item_card, parent, false)
+        val holder = ItemViewHolder(view)
+
+        holder.itemIsFav.setOnClickListener{
+            val position = holder.adapterPosition
+            items[position].favourited = !items[position].favourited
+            notifyItemChanged(position)
+
+        }
+      return holder
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
@@ -52,6 +56,7 @@ class ItemsAdapter (
             holder.itemIsFav.setBackgroundResource(R.drawable.favourite_unchecked)
         }
     }
+
 
     override fun getItemCount(): Int {
         return items.size

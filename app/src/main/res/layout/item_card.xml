@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="360dp"
+    android:layout_margin="16dp"
+    android:id="@+id/item_card"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="6dp"
+        android:elevation="100dp">
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/itemImage"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="6dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/itemText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:srcCompat="@tools:sample/backgrounds/scenic"
+        android:contentDescription="Card Image"/>
+
+
+        <TextView
+            android:id="@+id/itemText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:paddingLeft="20sp"
+            android:paddingRight="20sp"
+            android:text="Placeholder"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+        android:id="@+id/itemIsFav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itemImage"
+        app:srcCompat="@drawable/favourite_unchecked"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:contentDescription="fav_icon"
+        android:clickable="true"
+        android:focusable="true"/>
+       </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

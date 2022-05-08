@@ -1,17 +1,17 @@
 package com.example.myapp.itemslist
 
-import android.content.ClipData
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.R
+import java.util.*
 
-class ItemsAdapter(
+class ItemsAdapter (
     private var items: MutableList<ItemCard>
 ): RecyclerView.Adapter<ItemsAdapter.ItemViewHolder>() {
     inner class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
@@ -60,5 +60,14 @@ class ItemsAdapter(
     fun addItem(newItem: ItemCard){
         items.add(newItem)
         notifyItemInserted(items.size - 1)
+    }
+
+    fun filterList(filterllist: MutableList<ItemCard>) {
+        // below line is to add our filtered
+        // list in our course array list.
+        items = filterllist
+        // below line is to notify our adapter
+        // as change in recycler view data.
+        notifyDataSetChanged()
     }
 }

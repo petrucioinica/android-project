@@ -1,13 +1,15 @@
 package com.example.myapp
 
 import android.os.Bundle
+import android.view.*
+import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.itemslist.ItemCard
 import com.example.myapp.itemslist.ItemsAdapter
+import java.util.*
+
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -29,6 +31,9 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(true)
+
         var testItemsList = mutableListOf(ItemCard("Some Title", true), ItemCard("Another Title", false))
         if(itemsList.isEmpty()){
             itemsList.addAll(testItemsList)
@@ -49,6 +54,50 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         return homeView
     }
+
+    fun  filterItems(searchParam: String){
+        val filteredItems = mutableListOf<ItemCard>()
+        filteredItems.addAll(itemsList.filter { it.title.uppercase(Locale.getDefault()).contains(
+            searchParam.uppercase(Locale.getDefault())
+        ) })
+        if (searchParam == ""){
+            itemsAdapter.filterList(itemsList)
+        }
+
+        if(searchParam != "" && filteredItems.isEmpty()){
+            Toast.makeText(this.context, "No Data Found..", Toast.LENGTH_SHORT).show();
+        }
+        itemsAdapter.filterList(filteredItems)
+
+    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        inflater.inflate(R.menu.search_menu, menu)
+
+        var item: MenuItem = menu.findItem(R.id.action_search)
+
+        // getting search view of our item.
+        val searchView: SearchView = item.actionView as SearchView
+
+        // below line is to call set on query text listener method.
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                // inside on query text change method we are
+                // calling a method to filter our recycler view.
+                if( newText !== null){
+                    filterItems(newText)
+                }
+                return false
+            }
+        })
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
 
     companion object {
         /**

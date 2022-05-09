@@ -1,10 +1,14 @@
 package com.example.myapp
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.navOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +49,16 @@ class MainActivity : AppCompatActivity() {
                     })
             }
         }
+
+
+    }
+
+    public fun navigateToCreateSnap(){
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        navController.navigate(R.id.createSnapFragment)
     }
 
 

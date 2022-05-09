@@ -1,13 +1,18 @@
 package com.example.myapp
 
+
 import android.os.Bundle
+
 import android.view.*
+
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.itemslist.ItemCard
 import com.example.myapp.itemslist.ItemsAdapter
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 
@@ -15,15 +20,9 @@ import java.util.*
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class HomeFragment : Fragment() {
 
-    private var param1: String? = null
-    private var param2: String? = null
     private var itemsList = mutableListOf<ItemCard>()
 
     private lateinit var itemsRecView: RecyclerView
@@ -34,7 +33,7 @@ class HomeFragment : Fragment() {
 
         setHasOptionsMenu(true)
 
-        var testItemsList = mutableListOf(ItemCard("Some Title", true), ItemCard("Another Title", false))
+        val testItemsList = mutableListOf(ItemCard("Some Title", true), ItemCard("Another Title", false))
         if(itemsList.isEmpty()){
             itemsList.addAll(testItemsList)
         }
@@ -46,14 +45,25 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
         val homeView = inflater.inflate(R.layout.fragment_home, container, false)
+
 
         itemsRecView = homeView.findViewById(R.id.rvItems)
         itemsAdapter = ItemsAdapter(itemsList)
         itemsRecView.adapter = itemsAdapter
-        // Inflate the layout for this fragment
+
+        val takePictureButton = homeView.findViewById<FloatingActionButton>(R.id.takePictureButton)
+
+         val navController = findNavController()
+
+        takePictureButton.setOnClickListener {
+            navController.navigate(R.id.createSnapFragment)
+
+        }
         return homeView
     }
+
 
     fun  filterItems(searchParam: String){
         val filteredItems = mutableListOf<ItemCard>()
@@ -65,7 +75,7 @@ class HomeFragment : Fragment() {
         }
 
         if(searchParam != "" && filteredItems.isEmpty()){
-            Toast.makeText(this.context, "No Data Found..", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.context, "No Data Found..", Toast.LENGTH_SHORT).show()
         }
         itemsAdapter.filterList(filteredItems)
 
@@ -74,7 +84,7 @@ class HomeFragment : Fragment() {
 
         inflater.inflate(R.menu.search_menu, menu)
 
-        var item: MenuItem = menu.findItem(R.id.action_search)
+        val item: MenuItem = menu.findItem(R.id.action_search)
 
         // getting search view of our item.
         val searchView: SearchView = item.actionView as SearchView

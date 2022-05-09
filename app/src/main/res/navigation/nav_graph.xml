@@ -21,6 +21,13 @@
             app:destination="@id/profileFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_homeFragment_to_createSnapFragment"
+            app:destination="@id/createSnapFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/favouritesFragment"
@@ -36,4 +43,9 @@
         tools:layout="@layout/fragment_profile" >
 
     </fragment>
+    <fragment
+        android:id="@+id/createSnapFragment"
+        android:name="com.example.myapp.CreateSnapFragment"
+        android:label="fragment_create_snap"
+        tools:layout="@layout/fragment_create_snap" />
 </navigation>

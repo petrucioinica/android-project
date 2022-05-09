@@ -30,7 +30,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         tools:srcCompat="@tools:sample/backgrounds/scenic"
-        android:contentDescription="Card Image"/>
+        android:contentDescription="Card Image"
+        android:src="@color/design_default_color_primary_dark"     />
 
 
         <TextView

@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.content.FileProvider
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.File
 
 // TODO: Rename parameter arguments, choose names that match
@@ -48,7 +50,21 @@ class CreateSnapFragment : Fragment(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_create_snap, container, false)
+        val fragmentView = inflater.inflate(R.layout.fragment_create_snap, container, false)
+        val shareButton = fragmentView.findViewById<FloatingActionButton>(R.id.fab_share)
+        shareButton.setOnClickListener{
+            val titleInput = fragmentView.findViewById<EditText>(R.id.EditTextInputLayout).text
+
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "$titleInput")
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
+
+        return fragmentView
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

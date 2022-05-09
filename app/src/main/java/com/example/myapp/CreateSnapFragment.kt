@@ -6,13 +6,13 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.content.FileProvider
+import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.File
 
@@ -55,10 +55,15 @@ class CreateSnapFragment : Fragment(
         shareButton.setOnClickListener{
             val titleInput = fragmentView.findViewById<EditText>(R.id.EditTextInputLayout).text
 
+            val fileProvider = FileProvider.getUriForFile(this.requireContext(), "com.example.myapp.fileprovider", photoFile)
+
+
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TEXT, "$titleInput")
-                type = "text/plain"
+                type = "text"
+                putExtra(Intent.EXTRA_STREAM, fileProvider)
+                type = "image/jpeg"
             }
             val shareIntent = Intent.createChooser(sendIntent, null)
             startActivity(shareIntent)
